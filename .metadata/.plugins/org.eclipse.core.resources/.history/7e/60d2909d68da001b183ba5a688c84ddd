@@ -1,0 +1,28 @@
+package representation;
+import static org.junit.Assert.assertThat;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import addressbook.domain.Contact;
+import io.dropwizard.jackson.Jackson;
+
+public class ContactTest {
+	 private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+
+	    @Test
+	    public void serializesToJSON() throws Exception {
+	        final Contact contact = new Contact("id", "name", "firstName", "address", new ArrayList<String>(), "homePage", new Date(), "note");
+
+	        final String expected = MAPPER.writeValueAsString(
+	                MAPPER.readValue(fixture("fixtures/person.json"), Contact.class));
+
+	        Assert.assertEquals(MAPPER.writeValueAsString(contact), expected);
+	    }
+
+}

@@ -1,0 +1,137 @@
+package addressbook.domain;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.management.ConstructorParameters;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.cloud.firestore.Blob;
+
+public class Contact {
+	
+//	@JsonProperty
+	private String id; 
+
+//	@JsonProperty
+	private String name;
+
+//	@JsonProperty
+	private String firstName;
+
+//	@JsonProperty
+	private String address;
+
+//	@JsonProperty
+	private List<String> phone;
+
+//	@JsonProperty
+	@JsonIgnore
+	private Blob picture; // change this to bytes?
+
+//	@JsonProperty
+	private String homePage; //check which type is required
+
+//	@JsonProperty
+	private Date birthday;
+
+//	@JsonProperty
+	private String note;
+
+//	@JsonProperty
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public List<String> getPhone() {
+		return phone;
+	}
+
+	public void setPhone(List<String> phone) {
+		this.phone = phone;
+	}
+
+	@Override
+	public String toString() {
+		return "Contact [id=" + id + ", name=" + name + ", firstName=" + firstName + ", address=" + address + ", phone="
+				+ phone + ", picture=" + ", homePage=" + homePage + ", note=" + note + "]";
+	}
+
+	public Blob getPicture() {
+		return picture;
+	}
+
+	public void setPicture(Blob picture) {
+		this.picture = picture;
+	}
+
+	public String getHomePage() {
+		return homePage;
+	}
+
+	public void setHomePage(String homePage) {
+		this.homePage = homePage;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public Contact() {}
+	
+	@ConstructorParameters({"od", "name", "firstName", "address", "phone", "picture", "homePage", "birthday", "note"})
+	public Contact(String id, String name, String firstName, String address, List<String> phone, byte[] picture, String homePage, Date birthday,
+			String note) {// no picture in constructor
+		super();
+		this.id = id;
+		this.name = name;
+		this.firstName = firstName;
+		this.address = address;
+		this.phone = phone;
+		this.picture = picture;
+		this.homePage = homePage;
+		this.birthday = birthday;
+		this.note = note;
+	}
+}

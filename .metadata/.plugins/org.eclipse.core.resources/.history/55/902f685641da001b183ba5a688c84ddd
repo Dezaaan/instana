@@ -1,0 +1,19 @@
+package addressbook.serviceI;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import addressbook.domain.Contact;
+
+public interface FirebaseServiceI {
+	
+	public List<Contact> getAllContacts() throws InterruptedException, ExecutionException;
+	
+	public Contact getContactById(String id) throws InterruptedException, ExecutionException;
+
+	public Contact addContact(Contact contact) throws InterruptedException, ExecutionException;
+
+	public void deleteContact(String id) throws InterruptedException, ExecutionException;
+
+	public void updateContact(Contact contact);
+}

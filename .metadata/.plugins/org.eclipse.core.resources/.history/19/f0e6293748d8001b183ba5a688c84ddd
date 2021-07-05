@@ -1,0 +1,59 @@
+package addressbook.service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.firebase.cloud.FirestoreClient;
+
+import addressbook.domain.Contact;
+import addressbook.serviceI.FirebaseServiceI;
+
+public class FirebaseService implements FirebaseServiceI{
+	
+	private Firestore dbFirestore;
+	
+	private Storage
+	
+	public FirebaseService() {
+		this.dbFirestore = FirestoreClient.getFirestore();
+	}
+	
+	public List<Contact> getAllContacts() throws InterruptedException, ExecutionException {
+		List<QueryDocumentSnapshot> documents = dbFirestore.collection("contacts").get().get().getDocuments();
+		List<Contact> contacts = new ArrayList<Contact>();
+		for (QueryDocumentSnapshot document : documents) {
+			contacts.add(document.toObject(Contact.class));
+		}
+		return contacts;
+	}
+	
+	public Contact getContactById(String id) throws InterruptedException, ExecutionException {	
+//		System.out.println("IDcdelete:" + id);
+		DocumentReference docRef = dbFirestore.collection("contacts").whereEqualTo("id", id).get().get().getDocuments().get(0).getReference();
+//		System.out.print("docRef:" + docRef.get().get().toObject(Contact.class));
+		return docRef.get().get().toObject(Contact.class);
+	}
+
+	public Contact addContact(Contact contact) throws InterruptedException, ExecutionException {
+		System.out.print("addContact:");
+		DocumentReference addedDocRef = dbFirestore.collection("contacts").document();
+		System.out.print("addContact:");
+		addedDocRef.set(contact);
+		System.out.print("addContact:");
+		return addedDocRef.get().get().toObject(Contact.class);
+	}
+
+	public void deleteContact(String id) throws InterruptedException, ExecutionException {
+		dbFirestore.collection("contacts").whereEqualTo("id", id).get().get().getDocuments().get(0).getReference().delete();
+	}
+
+	public void updateContact(Contact contact) {
+		DocumentReference updateDocRef = dbFirestore.collection("contacts").document(contact.getId());
+//		System.out.print("updateDocuemt:" + updateDocRef);
+		dbFirestore.collection("contacts").document(contact.getId()).set(contact);
+	}
+}

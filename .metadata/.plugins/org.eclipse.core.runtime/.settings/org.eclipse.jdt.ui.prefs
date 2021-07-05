@@ -1,0 +1,9 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="io.dropwizard.Configuration"><rhs name\="addressbook.AddressBookConfiguration"/></lhs><lhs name\="java.util.Collection"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.List"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="addressbook.service.FirebaseService"><rhs name\="addressbook.service.FirebaseService"/></lhs><lhs name\="addressbook.resource.ContactResource"><rhs name\="addressbook.resource.ContactResource"/></lhs><lhs name\="addressbook.domain.Contact"><rhs name\="addressbook.domain.Contact"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="java.util.Date"/></lhs><lhs name\="java.util.Date"><rhs name\="java.util.Date"/></lhs><lhs name\="java.lang.Runnable"><rhs name\="java.lang.Thread"/></lhs><lhs name\="java.lang.Thread"><rhs name\="java.lang.Thread"/></lhs></history>
+content_assist_number_of_computers=12
+eclipse.preferences.version=1
+org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.internal.ui.navigator.librariesnode=true
+org.eclipse.jdt.ui.formatterprofiles.version=21
+spelling_locale_initialized=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

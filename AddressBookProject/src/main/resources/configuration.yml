@@ -1,0 +1,10 @@
+firebase:
+   databaseUrl: https://addressbookinstana.firebaseio.com/
+   credentialPath: ./serviceAccount.json
+server:
+  applicationConnectors:
+    - type: http
+      port: 8000
+  adminConnectors:
+    - type: http
+      port: 8001

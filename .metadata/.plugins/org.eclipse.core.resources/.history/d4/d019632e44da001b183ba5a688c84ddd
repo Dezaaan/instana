@@ -1,0 +1,100 @@
+package addressbook.resource;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.util.IOUtils;
+
+import addressbook.domain.Contact;
+import addressbook.serviceI.FirebaseServiceI;
+
+@Path("/contact")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class ContactResource {
+
+	private FirebaseServiceI firebaseService;
+
+	public ContactResource(FirebaseServiceI firebaseService) {
+		this.firebaseService = firebaseService;
+	}
+
+	@GET
+	public Response getAllContacts() throws InterruptedException, ExecutionException {
+		return Response.ok(firebaseService.getAllContacts()).build();
+	}
+
+	@GET
+	@Path("/{id}")
+	public Response getContact(@PathParam("id") String id) throws InterruptedException, ExecutionException {
+		Contact c = firebaseService.getContactById(id);
+		System.out.println("servis");
+		if (c != null) {
+			return Response.ok(c).build();
+		} else
+			return Response.status(Status.NOT_FOUND).build();
+	}
+
+//	@POST
+//	@Consumes(MediaType.MULTIPART_FORM_DATA)
+//	public Response addContact(@FormDataParam("file") InputStream fileInputStream,
+//			@FormDataParam("file") FormDataContentDisposition fileMetaData,
+//			@FormDataParam("contact") String contactJson) throws URISyntaxException, InterruptedException,
+//			ExecutionException, IOException {
+//		System.out.println("fileInputStream :" + fileInputStream.toString());
+//		System.out.println("fileMetaData :" + fileMetaData.toString());
+//		Contact contact = new ObjectMapper().readValue(contactJson, Contact.class);
+////		contact.setPicture(fileInputStream.readAllBytes());
+//		contact = firebaseService.addContact(contact);
+//
+//		System.out.println("Contact add:" + contact.toString());
+////		return Response.created(new URI("/contact/" + c)).build();
+//		return Response.ok(contact).build();
+//	}
+
+	@PUT
+	@Path("/update")
+	public Response updateContact(Contact contact) throws InterruptedException, ExecutionException {
+		System.out.println("ID:" + contact.getId());
+		Contact c = firebaseService.getContactById(contact.getId());
+		System.out.println("Contact:" + c.toString());
+		if (c != null) {
+			firebaseService.updateContact(contact);
+			return Response.ok(contact).build();
+		} else
+			return Response.status(Status.NOT_FOUND).build();
+	}
+
+	@DELETE
+	@Path("/delete/{id}")
+	public Response removeContactById(@PathParam("id") String id) throws InterruptedException, ExecutionException {
+		System.out.println("REmove");
+		Contact contact = firebaseService.getContactById(id);
+		if (contact != null) {
+			String message = "Contact deleted with id: " + firebaseService.deleteContact(id);
+			return Response.ok(message).build();
+		} else
+			return Response.status(Status.NOT_FOUND).build();
+	}
+}

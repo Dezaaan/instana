@@ -1,0 +1,8 @@
+addressbook\repository\ContactRepository.class
+addressbook\domain\Contact.class
+addressbook\service\FirebaseInitialize.class
+addressbook\AddressBookAplication.class
+addressbook\configuration\AddressBookConfiguration.class
+addressbook\resource\ContactResource.class
+addressbook\service\FirebaseOptionsFactory.class
+addressbook\service\FirebaseService.class
